@@ -26,6 +26,10 @@ jobs:
       - name: npm install, build, and test
         run: |
           npm install
+<<<<<<< HEAD
+=======
+          npm run start
+>>>>>>> 4ba4097469fcc4da894324ef34ba4aea7109c78e
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
