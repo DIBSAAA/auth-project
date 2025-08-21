@@ -70,6 +70,6 @@ app.get("/profile", authenticateToken, (req, res) => {
   res.json({ message: "Profile data", user: req.user });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
