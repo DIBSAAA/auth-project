@@ -14,6 +14,14 @@ app.use(bodyParser.json());
 /// In-memory “database” (for demo only)
 const users = [];
 
+const Joi = require("joi");
+
+/// JOI schema
+const userSchema = Joi.object({
+  username: Joi.string().alphanum().min(3).max(30).required(),
+  password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")).required(),
+});
+
 /// Generating JWT for user payload
 
 function generateToken(user) {
@@ -41,6 +49,15 @@ function authenticateToken(req, res, next) {
 
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
+  const userData = {
+    username: username,
+    password: password,
+  };
+
+  const { error, value } = userSchema.validate(userData);
+  if (error) {
+    return res.status(400).json({ error: error.message });
+  }
   if (users.find((u) => u.username === username)) {
     return res.status(400).json({ error: "Username already exists" });
   }
